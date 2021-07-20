@@ -6,6 +6,7 @@ using NMHD_DataAccess.Models;
 using NMHD_DataAccess.Repositories;
 using NMHD_DataAccess.ViewModels;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,6 +29,7 @@ namespace NuocMamHongDuc_Web_App.Controllers
         {
             var masterProds = await _context.Products.Where((p) => (isParent ? p.GeneralProductId == null : p.GeneralProductId != null)
                                                     && p.Active == true)
+                                                .Include((p) => p.GeneralProduct)
                                                 .ToListAsync<Product>();
             var resProds = new List<ProductDTO>();
             foreach (var masterProd in masterProds)
@@ -49,6 +51,20 @@ namespace NuocMamHongDuc_Web_App.Controllers
             int rowsAffected = await _context.SaveChangesAsync();
             return rowsAffected;
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Product>> GetProductById(int id)
+        {
+            var product = _context.Products.FirstOrDefault((p) => p.Id == id && p.Active == true);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+
+            return Ok(product);
+        }
+
         [HttpPut("{id}")]
         public async Task<ActionResult<Product>> UpdateProduct(int id, Product product)
         {
@@ -56,6 +72,7 @@ namespace NuocMamHongDuc_Web_App.Controllers
             {
                 return BadRequest();
             }
+            product.Active = true;
 
             _context.Update(product);
             await _context.SaveChangesAsync();
@@ -71,6 +88,17 @@ namespace NuocMamHongDuc_Web_App.Controllers
             {
                 return BadRequest();
             }
+            List<Product> childProd;
+            if (product.GeneralProductId == null)
+            {
+                childProd = await _context.Products.Where((p) => p.GeneralProductId == product.Id && p.Active == true)
+                    .ToListAsync();
+                foreach (var child in childProd)
+                {
+                    child.Active = false;
+                }
+            }
+
             product.Active = false;
             _context.Update(product);
             await _context.SaveChangesAsync();

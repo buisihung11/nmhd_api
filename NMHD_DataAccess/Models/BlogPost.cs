@@ -11,6 +11,8 @@ namespace NMHD_DataAccess.Models
     {
         public int Id { get; set; }
         public String Title { get; set; }
+        public String Banner{ get; set; }
+
         public String Content { get; set; }
         public BlogPostType BlogPostType { get; set; }
 
