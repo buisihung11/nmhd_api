@@ -4,7 +4,6 @@ D:\Freelancer\NuocMamHongDucAPI\NuocMamHongDuc_Web_App\NMHD_DataAccess\bin\Debug
 D:\Freelancer\NuocMamHongDucAPI\NuocMamHongDuc_Web_App\NMHD_DataAccess\bin\Debug\net5.0\NMHD_DataAccess.dll
 D:\Freelancer\NuocMamHongDucAPI\NuocMamHongDuc_Web_App\NMHD_DataAccess\bin\Debug\net5.0\ref\NMHD_DataAccess.dll
 D:\Freelancer\NuocMamHongDucAPI\NuocMamHongDuc_Web_App\NMHD_DataAccess\bin\Debug\net5.0\NMHD_DataAccess.pdb
-D:\Freelancer\NuocMamHongDucAPI\NuocMamHongDuc_Web_App\NMHD_DataAccess\obj\Debug\net5.0\NMHD_DataAccess.csprojAssemblyReference.cache
 D:\Freelancer\NuocMamHongDucAPI\NuocMamHongDuc_Web_App\NMHD_DataAccess\obj\Debug\net5.0\NMHD_DataAccess.GeneratedMSBuildEditorConfig.editorconfig
 D:\Freelancer\NuocMamHongDucAPI\NuocMamHongDuc_Web_App\NMHD_DataAccess\obj\Debug\net5.0\NMHD_DataAccess.AssemblyInfoInputs.cache
 D:\Freelancer\NuocMamHongDucAPI\NuocMamHongDuc_Web_App\NMHD_DataAccess\obj\Debug\net5.0\NMHD_DataAccess.AssemblyInfo.cs
@@ -13,3 +12,4 @@ D:\Freelancer\NuocMamHongDucAPI\NuocMamHongDuc_Web_App\NMHD_DataAccess\obj\Debug
 D:\Freelancer\NuocMamHongDucAPI\NuocMamHongDuc_Web_App\NMHD_DataAccess\obj\Debug\net5.0\ref\NMHD_DataAccess.dll
 D:\Freelancer\NuocMamHongDucAPI\NuocMamHongDuc_Web_App\NMHD_DataAccess\obj\Debug\net5.0\NMHD_DataAccess.pdb
 D:\Freelancer\NuocMamHongDucAPI\NuocMamHongDuc_Web_App\NMHD_DataAccess\obj\Debug\net5.0\NMHD_DataAccess.genruntimeconfig.cache
+D:\Freelancer\NuocMamHongDucAPI\NuocMamHongDuc_Web_App\NMHD_DataAccess\obj\Debug\net5.0\NMHD_DataAccess.csproj.AssemblyReference.cache
