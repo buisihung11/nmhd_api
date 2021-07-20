@@ -10,6 +10,13 @@ namespace NMHD_DataAccess.Models
 {
     public class OrderDetail
     {
+        public OrderDetail(int orderId, int productId, int quantity)
+        {
+            OrderId = orderId;
+            ProductId = productId;
+            Quantity = quantity;
+        }
+
         public Order Order { get; set; }
         public Product Product { get; set; }
         [Key,Column(Order = 1)]
