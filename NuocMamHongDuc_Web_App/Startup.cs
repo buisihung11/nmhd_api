@@ -10,6 +10,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NMHD_DataAccess.Models;
 using NMHD_DataAccess.Repositories;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NuocMamHongDuc_Web_App
 {
@@ -21,6 +23,7 @@ namespace NuocMamHongDuc_Web_App
         }
 
         public IConfiguration Configuration { get; }
+        public static readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -51,10 +54,12 @@ namespace NuocMamHongDuc_Web_App
             });
             services.AddCors(options =>
             {
-                options.AddPolicy("_mypolicy",
+                options.AddPolicy(MyAllowSpecificOrigins,
                     builder =>
                     {
-                        builder.AllowAnyOrigin()
+                        builder
+                        .WithOrigins(GetDomain())
+                        //.AllowAnyOrigin()
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                     });
@@ -90,8 +95,17 @@ namespace NuocMamHongDuc_Web_App
                 });
 
             });
-        }
 
+
+
+        }
+        private string[] GetDomain()
+        {
+            var domains = Configuration.GetSection("Domain").Get<Dictionary<string, string>>()
+                .SelectMany(s => s.Value.Split(",")).ToArray();
+            return domains;
+
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
