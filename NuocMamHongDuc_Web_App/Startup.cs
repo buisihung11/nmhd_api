@@ -59,7 +59,7 @@ namespace NuocMamHongDuc_Web_App
                     {
                         builder
                         .WithOrigins(GetDomain())
-                        //.AllowAnyOrigin()
+                        .AllowAnyOrigin()
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                     });
