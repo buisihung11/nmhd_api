@@ -30,7 +30,7 @@ namespace NuocMamHongDuc_Web_App
         {
             services.AddDbContext<NMHDDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+            
             services.AddTransient<ITokenService, TokenService>();
             services.AddScoped<ProductRepository>();
 
@@ -121,7 +121,6 @@ namespace NuocMamHongDuc_Web_App
             app.UseRouting();
 
             app.UseAuthorization();
-            app.UseCors("_mypolicy");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
