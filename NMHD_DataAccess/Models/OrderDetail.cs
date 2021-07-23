@@ -10,11 +10,12 @@ namespace NMHD_DataAccess.Models
 {
     public class OrderDetail
     {
-        public OrderDetail(int orderId, int productId, int quantity)
+        public OrderDetail(int orderId, int productId, int quantity, String productName)
         {
             OrderId = orderId;
             ProductId = productId;
             Quantity = quantity;
+            ProductName = productName;
         }
 
         public Order Order { get; set; }
@@ -24,6 +25,8 @@ namespace NMHD_DataAccess.Models
         [Key, Column(Order = 2)]
         public int ProductId { get; set; }
         public int Quantity { get; set; }
+        public String ProductName { get; set; }
+
 
     }
 }

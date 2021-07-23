@@ -26,7 +26,8 @@ namespace NuocMamHongDuc_Web_App.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Order>>> GetOrders()
         {
-            return await _context.Orders.ToListAsync();
+            return await _context.Orders.Include((o) => o.OrderDetails).ThenInclude((o) => o.Product)
+                .ToListAsync();
         }
 
         [HttpPost]
@@ -37,18 +38,41 @@ namespace NuocMamHongDuc_Web_App.Controllers
                 return BadRequest();
             }
 
-            var order = new Order(orderModel.CheckInDate, orderModel.CustName, orderModel.CustPhone, orderModel.CustEmail, orderModel.Note, (int)OrderStatus.New);
-            _context.Orders.Add(order);
-            _context.SaveChanges();
-            IList<OrderDetail> orderDetails = new List<OrderDetail>();
-            foreach (var prod in orderModel.Products)
+            using var transaction = _context.Database.BeginTransaction();
+            orderModel.CheckInDate = DateTime.Now;
+            try
             {
-                orderDetails.Add(new OrderDetail(order.Id, prod.ProductId, prod.Quantity));
-            }
-            _context.OrderDetails.AddRange(orderDetails);
+                var order = new Order(orderModel.CheckInDate, orderModel.CustName, orderModel.CustPhone, orderModel.CustEmail, orderModel.Note, (int)OrderStatus.New);
+                _context.Orders.Add(order);
+                _context.SaveChanges();
 
-            _context.SaveChanges();
-            return order;
+                var listIdProds = orderModel.Products.Select((od) => od.ProductId);
+
+                var childProds = _context.Products.Where((p) => listIdProds.Contains(p.Id));
+
+                IList<OrderDetail> orderDetails = new List<OrderDetail>();
+                foreach (var prod in orderModel.Products)
+                {
+                    var prodData = childProds.FirstOrDefault((p) => p.Id == prod.ProductId);
+                    orderDetails.Add(new OrderDetail(order.Id, prod.ProductId, prod.Quantity, prodData.ProductName));
+                }
+
+                _context.OrderDetails.AddRange(orderDetails);
+                _context.SaveChanges();
+
+                // Commit transaction if all commands succeed, transaction will auto-rollback
+                // when disposed if either commands fails
+                transaction.Commit();
+                return CreatedAtAction("CreateOrder", order.Id, order);
+            }
+            catch (Exception e)
+            {
+                transaction.Rollback();
+                // TODO: Handle failure
+                return BadRequest();
+            }
+
+            return BadRequest();
         }
 
         [HttpPut("{id}")]

@@ -25,12 +25,29 @@ namespace NuocMamHongDuc_Web_App.Controllers
 
         // [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts(bool isParent)
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts([FromQuery] bool isParent, [FromQuery] String sku, [FromQuery] String[] tags,
+                                                                                [FromQuery] int id = -1)
         {
-            var masterProds = await _context.Products.Where((p) => (isParent ? p.GeneralProductId == null : p.GeneralProductId != null)
+            var masterProds =  _context.Products.Where((p) => (isParent ? p.GeneralProductId == null : p.GeneralProductId != null)
                                                     && p.Active == true)
                                                 .Include((p) => p.GeneralProduct)
-                                                .ToListAsync<Product>();
+                                                .AsQueryable();
+                                                
+            if(id != -1)
+            {
+                masterProds = masterProds.Where((p) => p.Id== id);
+            }
+            if(sku != null)
+            {
+                masterProds = masterProds.Where((p) => p.SKU == sku);
+            }
+
+            if(tags != null && !tags.Any())
+            {
+                masterProds = masterProds.Where((p) => p.Tags.Contains(String.Join(',',tags)));
+            }
+
+                
             var resProds = new List<ProductDTO>();
             foreach (var masterProd in masterProds)
             {
@@ -53,7 +70,7 @@ namespace NuocMamHongDuc_Web_App.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProductById(int id)
+        public ActionResult<Product> GetProductById(int id)
         {
             var product = _context.Products.FirstOrDefault((p) => p.Id == id && p.Active == true);
             if (product == null)
