@@ -59,7 +59,7 @@ namespace NuocMamHongDuc_Web_App
                     {
                         builder
                         .WithOrigins(GetDomain())
-                        .AllowAnyOrigin()
+                        //.AllowAnyOrigin()
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                     });
@@ -93,21 +93,16 @@ namespace NuocMamHongDuc_Web_App
                                 }
                             },
                             new string[] {}
-
                     }
                 });
 
             });
-
-
-
         }
         private string[] GetDomain()
         {
             var domains = Configuration.GetSection("Domain").Get<Dictionary<string, string>>()
                 .SelectMany(s => s.Value.Split(",")).ToArray();
             return domains;
-
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -119,10 +114,9 @@ namespace NuocMamHongDuc_Web_App
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NuocMamHongDuc_Web_App v1"));
             }
 
-            app.UseHttpsRedirection();
-
+            //app.UseHttpsRedirection();
             app.UseRouting();
-
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
