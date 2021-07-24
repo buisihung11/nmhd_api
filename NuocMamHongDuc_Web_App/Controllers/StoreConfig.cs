@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NMHD_DataAccess.Models;
 using System;
 using System.Collections.Generic;
@@ -28,10 +29,13 @@ namespace NuocMamHongDuc_Web_App.Controllers
         [HttpPut("{id}")]
         public ActionResult<StoreConfig> UpdateStoreConfig(int id, StoreConfig storeConfig)
         {
-            if (id != storeConfig.Id)
+            var storeUpdate = _context.StoreConfigs.AsNoTracking().FirstOrDefault((s) => s.Id == id);
+            if (storeUpdate == null)
             {
                 return BadRequest();
             }
+            storeConfig.Username = storeUpdate.Username;
+            storeConfig.Password = storeUpdate.Password;
             _context.Update(storeConfig);
             _context.SaveChanges();
             return storeConfig;

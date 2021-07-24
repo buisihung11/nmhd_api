@@ -204,6 +204,9 @@ namespace NMHD_DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
 

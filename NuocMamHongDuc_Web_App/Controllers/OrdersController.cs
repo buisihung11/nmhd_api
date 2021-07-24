@@ -87,7 +87,7 @@ namespace NuocMamHongDuc_Web_App.Controllers
             return order;
         }
         [HttpPut("{id}/status")]
-        public ActionResult<Order> UpdateOrderStatus(int id, int orderStatus)
+        public ActionResult<Order> UpdateOrderStatus(int id,[FromBody] int orderStatus)
         {
             var order = _context.Orders.FirstOrDefault((o) => o.Id == id);
             if (order == null)

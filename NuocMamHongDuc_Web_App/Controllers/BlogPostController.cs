@@ -22,7 +22,7 @@ namespace NuocMamHongDuc_Web_App.Controllers
         [HttpGet]
         public async Task<ActionResult<List<BlogPost>>> GetBlogPosts(int blogPostType = -1)
         {
-            List<BlogPost> blogposts = await _context.BlogPosts.Where((b) => blogPostType == -1|| (int)b.BlogPostType == blogPostType)
+            List<BlogPost> blogposts = await _context.BlogPosts.Where((b) => blogPostType == -1 || (int)b.BlogPostType == blogPostType)
                 .ToListAsync();
             return blogposts;
         }
@@ -35,10 +35,17 @@ namespace NuocMamHongDuc_Web_App.Controllers
             return blogPost;
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<BlogPost> GetBlogPostById(int id)
+        {
+
+            return _context.BlogPosts.FirstOrDefault((b) => b.Id == id);
+        }
+
         [HttpPut("{id}")]
         public ActionResult<BlogPost> UpdateBlogPost(int id, BlogPost blogPost)
         {
-            if(id != blogPost.Id)
+            if (id != blogPost.Id)
             {
                 return BadRequest();
             }
@@ -47,12 +54,12 @@ namespace NuocMamHongDuc_Web_App.Controllers
             _context.SaveChanges();
             return blogPost;
         }
-        
+
         [HttpDelete("{id}")]
         public ActionResult<BlogPost> DeleteBlogPost(int id)
         {
             var blogPost = _context.BlogPosts.FirstOrDefault((b) => b.Id == id);
-            if(blogPost != null)
+            if (blogPost == null)
             {
                 return NotFound();
             }

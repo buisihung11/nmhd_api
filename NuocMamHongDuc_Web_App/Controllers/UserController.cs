@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NMHD_DataAccess.Models;
 using NMHD_DataAccess.Repositories;
+using NuocMamHongDuc_Web_App.RequestModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,16 +75,16 @@ namespace NuocMamHongDuc_Web_App.Controllers
 
         // [Authorize]
         [HttpPut]
-        public ActionResult UpdatePassword(String username, String oldPassword, String newPassword)
+        public ActionResult UpdatePassword([FromBody] ChangePasswordModel changePasswordModel)
         {
-            var hasedOldPasword = Utils.Utils.GetHash(oldPassword, SALT);
-            var user = _context.StoreConfigs.FirstOrDefault((s) => s.Username == username && s.Password == hasedOldPasword);
+            var hasedOldPasword = Utils.Utils.GetHash(changePasswordModel.OldPassword, SALT);
+            var user = _context.StoreConfigs.FirstOrDefault((s) => s.Username == changePasswordModel.Username && s.Password == hasedOldPasword);
             if(user == null)
             {
                 return BadRequest();
             }
 
-            user.Password = Utils.Utils.GetHash(newPassword, SALT);
+            user.Password = Utils.Utils.GetHash(changePasswordModel.NewPassword, SALT);
             _context.SaveChanges();
             return Ok(user);
             
