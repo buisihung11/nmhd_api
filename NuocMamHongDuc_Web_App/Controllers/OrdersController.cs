@@ -32,7 +32,6 @@ namespace NuocMamHongDuc_Web_App.Controllers
                 .ToListAsync();
         }
 
-        [Authorize]
         [HttpPost]
         public ActionResult<Order> CreateOrder(OrderCreaterRequestModel orderModel)
         {
