@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NMHD_DataAccess.Models;
@@ -27,6 +28,7 @@ namespace NuocMamHongDuc_Web_App.Controllers
             return blogposts;
         }
 
+        [Authorize]
         [HttpPost]
         public BlogPost CreateBlogPost(BlogPost blogPost)
         {
@@ -35,6 +37,7 @@ namespace NuocMamHongDuc_Web_App.Controllers
             return blogPost;
         }
 
+
         [HttpGet("{id}")]
         public ActionResult<BlogPost> GetBlogPostById(int id)
         {
@@ -42,6 +45,7 @@ namespace NuocMamHongDuc_Web_App.Controllers
             return _context.BlogPosts.FirstOrDefault((b) => b.Id == id);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public ActionResult<BlogPost> UpdateBlogPost(int id, BlogPost blogPost)
         {
@@ -55,6 +59,7 @@ namespace NuocMamHongDuc_Web_App.Controllers
             return blogPost;
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult<BlogPost> DeleteBlogPost(int id)
         {

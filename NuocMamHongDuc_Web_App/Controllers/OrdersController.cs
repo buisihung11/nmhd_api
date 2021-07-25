@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NMHD_DataAccess.Constraints;
@@ -23,6 +24,7 @@ namespace NuocMamHongDuc_Web_App.Controllers
             _context = context;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<List<Order>>> GetOrders()
         {
@@ -30,6 +32,7 @@ namespace NuocMamHongDuc_Web_App.Controllers
                 .ToListAsync();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult<Order> CreateOrder(OrderCreaterRequestModel orderModel)
         {
@@ -75,6 +78,7 @@ namespace NuocMamHongDuc_Web_App.Controllers
             return BadRequest();
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public ActionResult<Order> UpdateOrder(int id, Order order)
         {
@@ -86,6 +90,8 @@ namespace NuocMamHongDuc_Web_App.Controllers
             _context.SaveChanges();
             return order;
         }
+
+        [Authorize]
         [HttpPut("{id}/status")]
         public ActionResult<Order> UpdateOrderStatus(int id,[FromBody] int orderStatus)
         {

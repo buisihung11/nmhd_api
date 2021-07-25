@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NMHD_DataAccess.Models;
@@ -26,6 +27,7 @@ namespace NuocMamHongDuc_Web_App.Controllers
             return storeConfig;
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public ActionResult<StoreConfig> UpdateStoreConfig(int id, StoreConfig storeConfig)
         {

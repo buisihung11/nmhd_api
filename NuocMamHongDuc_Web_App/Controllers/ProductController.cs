@@ -25,7 +25,7 @@ namespace NuocMamHongDuc_Web_App.Controllers
 
         // [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts([FromQuery] bool isParent, [FromQuery] String sku, [FromQuery] String[] tags,
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts([FromQuery] bool isParent, [FromQuery] String sku, [FromQuery] String tag,
                                                                                 [FromQuery] int id = -1)
         {
             var masterProds =  _context.Products.Where((p) => (isParent ? p.GeneralProductId == null : p.GeneralProductId != null)
@@ -42,9 +42,9 @@ namespace NuocMamHongDuc_Web_App.Controllers
                 masterProds = masterProds.Where((p) => p.SKU == sku);
             }
 
-            if(tags != null && !tags.Any())
+            if(tag != null)
             {
-                masterProds = masterProds.Where((p) => p.Tags.Contains(String.Join(',',tags)));
+                masterProds = masterProds.Where((p) => p.Tags.Contains(tag));
             }
 
                 
@@ -60,6 +60,7 @@ namespace NuocMamHongDuc_Web_App.Controllers
             return Ok(resProds);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<int> AddProduct(Product product)
         {
@@ -82,6 +83,7 @@ namespace NuocMamHongDuc_Web_App.Controllers
             return Ok(product);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<Product>> UpdateProduct(int id, Product product)
         {
@@ -97,6 +99,7 @@ namespace NuocMamHongDuc_Web_App.Controllers
             return product;
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<int>> DeleteProduct(int id)
         {

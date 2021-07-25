@@ -73,7 +73,7 @@ namespace NuocMamHongDuc_Web_App.Controllers
             }
         }
 
-        // [Authorize]
+        [Authorize]
         [HttpPut]
         public ActionResult UpdatePassword([FromBody] ChangePasswordModel changePasswordModel)
         {
