@@ -24,8 +24,8 @@ namespace NuocMamHongDuc_Web_App.Controllers
             _context = context;
         }
 
-        [Authorize]
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<List<Order>>> GetOrders()
         {
             return await _context.Orders.Include((o) => o.OrderDetails).ThenInclude((o) => o.Product)
