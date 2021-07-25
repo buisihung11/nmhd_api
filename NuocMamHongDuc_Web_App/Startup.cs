@@ -117,6 +117,7 @@ namespace NuocMamHongDuc_Web_App
             //app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors(MyAllowSpecificOrigins);
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
