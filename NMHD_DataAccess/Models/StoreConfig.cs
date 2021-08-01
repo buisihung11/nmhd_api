@@ -8,7 +8,7 @@ namespace NMHD_DataAccess.Models
 {
     public class StoreConfig
     {
-        public StoreConfig(int id, string providerName1, string providerName2, string providerPhone1, string providerPhone2, string providerMail1, string providerMail2, DateTime startTime, DateTime endTime, string websiteURL)
+        public StoreConfig(int id, string providerName1, string providerName2, string providerPhone1, string providerPhone2, string providerMail1, string providerMail2, DateTime startTime, DateTime endTime, string websiteURL, String footerUrl)
         {
             Id = id;
             ProviderName1 = providerName1;
@@ -20,6 +20,7 @@ namespace NMHD_DataAccess.Models
             StartTime = startTime;
             EndTime = endTime;
             WebsiteURL = websiteURL;
+            FooterImageUrl = footerUrl;
         }
 
         public int Id { get; set; }
@@ -35,6 +36,7 @@ namespace NMHD_DataAccess.Models
         public DateTime EndTime { get; set; }
         public String WebsiteURL { get; set; }
         public String Address { get; set; }
+        public String FooterImageUrl { get; set; }
 
 
     }
