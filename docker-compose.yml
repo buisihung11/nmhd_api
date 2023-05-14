@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  nmhd-api:
+    build: .
+    ports:
+      - "8000:80" # Map container port 80 to host port 8000
+    depends_on:
+      - db # Wait for the db container to start
+    command: >
+      sh -c "dotnet ef database update --no-launch-profile --project ./NMHD_DataAccess/NMHD_DataAccess.csproj --startup-project ./NuocMamHongDuc_Web_App/NuocMamHongDuc_Web_App.csproj"
+
+  db:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=zaQ@1234a
+      - DB_NAME=NMHD
+    ports:
+      - "1433:1433" # Map container port 1433 to host port 1433

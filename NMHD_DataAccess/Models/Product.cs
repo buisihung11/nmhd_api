@@ -16,6 +16,7 @@ namespace NMHD_DataAccess.Models
         public int Position { get; set; }
         public int? GeneralProductId { get; set; }
         public int? GalleryId { get; set; }
+        public float Price { get; set; }
 
         public ICollection<Gallery> Galleries { get; set; }
         public ICollection<Order> Orders { get; set; }
